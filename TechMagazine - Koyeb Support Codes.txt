@@ -1,0 +1,57 @@
+Step1:- 
+
+requirements.txt
+
+aiohttp
+
+Step2:-
+
+bot.py
+
+from aiohttp import web
+from plugins import web_server
+
+PORT = "8080"
+
+app = web.AppRunner(await web_server())
+        await app.setup()
+        bind_address = "0.0.0.0"
+        await web.TCPSite(app, bind_address, PORT).start()
+
+Step3:-
+
+Create New File
+
+__init__.py
+
+from aiohttp import web
+from .route import routes
+
+async def web_server():
+    web_app = web.Application(client_max_size=30000000)
+    web_app.add_routes(routes)
+    return web_app 
+
+Step4:-
+
+Create New File
+
+route.py
+
+from aiohttp import web
+
+routes = web.RouteTableDef()
+
+@routes.get("/", allow_head=True)
+async def root_route_handler(request):
+    return web.json_response("TechMagazineYT")
+
+Step5:-
+
+Procfile
+
+worker change to web
+
+Step6:-
+
+Add Koyeb Deploy Button
